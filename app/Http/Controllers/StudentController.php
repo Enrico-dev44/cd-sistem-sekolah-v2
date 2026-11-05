@@ -25,7 +25,6 @@ class StudentController extends Controller
                 'major' => 'AKL'
             ]
         ];
-        
         return view('students.index', [
             'title' => $title,
             'students' => $students
