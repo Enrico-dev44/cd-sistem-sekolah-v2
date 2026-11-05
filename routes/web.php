@@ -54,19 +54,19 @@ Route::name('teachers.')->prefix('teachers')->group(function () {
 //Menejemen data kelas (invokable)
 Route::name('classes.')->prefix('classes')->group(function () {
     // Menampilkan daftar data
-    Route::get('/', IndexController::class)->name('index');
+    Route::get('/', [IndexController::class, '__invoke'])->name('index');
     // Menampilkan form penambahan data
-    Route::get('/create', CreateController::class)->name('create');
+    Route::get('/create', [CreateController::class, '__invoke'])->name('create');
     // Menyimpan data baru
-    Route::post('/', StoreController::class)->name('store');
+    Route::post('/', [StoreController::class, '__invoke'])->name('store');
     // Menampilkan detail satu data
-    Route::get('/{id}', ShowController::class)->name('show');
+    Route::get('/{id}', [ShowController::class, '__invoke'])->name('show');
     // Menampilkan form perubahan data
-    Route::get('/{id}/edit', EditController::class)->name('edit');
+    Route::get('/{id}/edit', [EditController::class, '__invoke'])->name('edit');
     // Memperbarui data
-    Route::put('/{id}', UpdateController::class)->name('update');
+    Route::put('/{id}', [UpdateController::class, '__invoke'])->name('update');
     // Menghapus data
-    Route::delete('/{id}', DestroyController::class)->name('destroy');
+   Route::delete('/{id}', [DestroyController::class, '__invoke'])->name('destroy');
 });
 
 //Menejemen data jurusan (resource)
