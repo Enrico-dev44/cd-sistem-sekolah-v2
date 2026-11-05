@@ -1,67 +1,73 @@
 <?php
 
-use App\Http\Controllers\SchoolClassController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\SchoolClass\IndexController;
+use App\Http\Controllers\SchoolClass\CreateController;
+use App\Http\Controllers\SchoolClass\StoreController;
+use App\Http\Controllers\SchoolClass\ShowController;
+use App\Http\Controllers\SchoolClass\EditController;
+use App\Http\Controllers\SchoolClass\UpdateController;
+use App\Http\Controllers\SchoolClass\DestroyController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Teacher\IndexController;
-use App\Http\Controllers\Teacher\ShowController;
-use App\Http\Controllers\Teacher\CreateController;
-use App\Http\Controllers\Teacher\EditController;
-use App\Http\Controllers\Teacher\StoreController;
-use App\Http\Controllers\Teacher\UpdateController;
-use App\Http\Controllers\Teacher\DestroyController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Manajemen Data Siswa (Action Controller)
+//Menejemen data siswa
 Route::name('students.')->prefix('students')->group(function () {
-    // Halaman Daftar Siswa
+    // Menampilkan daftar data
     Route::get('/', [StudentController::class, 'index'])->name('index');
-
-    // Halaman Detail Siswa
-    Route::get('/{id}', [StudentController::class, 'show'])->name('show');
-
-    // Halaman Tambah Siswa
+    // Menampilkan form penambahan data
     Route::get('/create', [StudentController::class, 'create'])->name('create');
-
-    // Halaman Edit Siswa
+    // Menyimpan data baru
+    Route::post('/', [StudentController::class, 'store'])->name('store');
+    // Menampilkan detail satu data
+    Route::get('/{id}', [StudentController::class, 'show'])->name('show');
+    // Menampilkan form perubahan data
     Route::get('/{id}/edit', [StudentController::class, 'edit'])->name('edit');
-
-    // Logika Tambah Siswa
-    Route::post('/',[StudentController::Class, 'store'])->name('store');
-
-    // Logika Edit Siswa
+    // Memperbarui data
     Route::put('/{id}', [StudentController::class, 'update'])->name('update');
-
-    // Logika Hapus Siswa
+    // Menghapus data
     Route::delete('/{id}', [StudentController::class, 'destroy'])->name('destroy');
 });
 
-// Manajemen Data Guru (Invokable)
+//Menejemen data guru
 Route::name('teachers.')->prefix('teachers')->group(function () {
-    // Halaman Daftar Guru
+    // Menampilkan daftar data
+    Route::get('/', [TeacherController::class, 'index'])->name('index');
+    // Menampilkan form penambahan data
+    Route::get('/create', [TeacherController::class, 'create'])->name('create');
+    // Menyimpan data baru
+    Route::post('/', [TeacherController::class, 'store'])->name('store');
+    // Menampilkan detail satu data
+    Route::get('/{id}', [TeacherController::class, 'show'])->name('show');
+    // Menampilkan form perubahan data
+    Route::get('/{id}/edit', [TeacherController::class, 'edit'])->name('edit');
+    // Memperbarui data
+    Route::put('/{id}', [TeacherController::class, 'update'])->name('update');
+    // Menghapus data
+    Route::delete('/{id}', [TeacherController::class, 'destroy'])->name('destroy');
+});
+
+//Menejemen data kelas (invokable)
+Route::name('classes.')->prefix('classes')->group(function () {
+    // Menampilkan daftar data
     Route::get('/', IndexController::class)->name('index');
-
-    // Halaman Detail Guru
-    Route::get('/{id}', ShowController::class)->name('show');
-
-    // Halaman Tambah Guru
+    // Menampilkan form penambahan data
     Route::get('/create', CreateController::class)->name('create');
-
-    // Halaman Edit Guru
-    Route::get('/{id}/edit', EditController::class)->name('edit');
-
-    // Logika Tambah Guru
+    // Menyimpan data baru
     Route::post('/', StoreController::class)->name('store');
-
-    // Logika Edit Guru
+    // Menampilkan detail satu data
+    Route::get('/{id}', ShowController::class)->name('show');
+    // Menampilkan form perubahan data
+    Route::get('/{id}/edit', EditController::class)->name('edit');
+    // Memperbarui data
     Route::put('/{id}', UpdateController::class)->name('update');
-
-    // Logika Hapus Guru
+    // Menghapus data
     Route::delete('/{id}', DestroyController::class)->name('destroy');
 });
 
-// Manajemen Data Kelas (Resource)
-Route::resource('classes', SchoolClassController::class);
+//Menejemen data jurusan (resource)
+Route::resource('majors', \App\Http\Controllers\MajorController::class);
